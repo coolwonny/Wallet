@@ -18,5 +18,3 @@ def derive_wallets(mnemonic, coin, numderive):
     # print all the addresses
     return keys
 
-derive_wallets('van spirit reward accident opera load option slow fortune acid picnic genuine', BTC, 3)
-
