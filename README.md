@@ -15,6 +15,18 @@ The process can be divided into three parts:
 
 In this section, we are to create a function using `subprocess` library that derives wallet information such as address, index, path, private key and public key. With this information, we can call each necessary private key for desired transaction.   
 
+```
+def derive_wallets(mnemonic, coin, numderive):
+    command = f'php hd-wallet-derive/hd-wallet-derive.php -g --mnemonic="{mnemonic}" --coin="{coin}" --numderive="{numderive}" --cols=address,index,path,privkey,pubkey,pubkeyhash,xprv,xpub --format=json'
+    p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+    (output, err) = p.communicate()
+    p_status = p.wait()
+
+    keys = json.loads(output)
+    # print all the addresses
+    return keys
+```   
+
 ## Linking the transaction signing libraries
 
 In this section, we are to create three more functions as below.    
@@ -27,6 +39,14 @@ This function needs the following parameters:**
  - For ETH, return Account.privateKeyToAccount(priv_key)
  - For BTCTEST, return PrivateKeyTestnet(priv_key)
 
+```
+def priv_key_to_account(coin, priv_key):
+    if coin == ETH:
+        return Account.privateKeyToAccount(priv_key)
+    elif coin == BTCTEST:
+        return PrivateKeyTestnet(priv_key)
+```
+
 **2. `create_tx` -- this will create the raw, unsigned transaction that contains all metadata needed to transact.
 This function needs the following parameters:**
  - coin -- the coin type (defined in [constants.py](https://github.com/coolwonny/Wallet/blob/master/constants.py)).
@@ -36,6 +56,25 @@ This function needs the following parameters:**
  - For ETH, return an object containing `to`, `from`, `value`, `gas`, `gasPrice` and `nonce`
  - For BTCTEST, return `PrivateKeyTestnet.prepare_transaction(account.address, [(to, amount, BTC)])`
 
+```
+def create_tx(coin, account, to, amount):
+    if coin == ETH:
+        gasEstimate = w3.eth.estimateGas(
+        {"from": account.address, "to": to, "value": amount}
+    )
+        return {
+            "to": to,
+            "from": account.address,
+            "value": amount,
+            "gas": gasEstimate,
+            "gasPrice": w3.eth.gasPrice,
+            "nonce": w3.eth.getTransactionCount(account.address),
+            
+    }
+    elif coin == BTCTEST:
+        return PrivateKeyTestnet.prepare_transaction(account.address, [(to, amount, BTC)])
+```
+
 **3. `send_tx` -- this will call create_tx, sign the transaction, then send it to the designated network.
 This function needs the following parameters:**
  - coin -- the coin type (defined in [constants.py](https://github.com/coolwonny/Wallet/blob/master/constants.py)).
@@ -44,6 +83,18 @@ This function needs the following parameters:**
  - amount -- the amount of the coin to send.
  - For ETH, return `w3.eth.sendRawTransaction(signed.rawTransaction)`
  - For BTCTEST, return `NetworkAPI.broadcast_tx_testnet(signed)`    
+
+```
+def send_tx(coin, account, to, amount):
+    tx = create_tx(coin, account, to, amount)
+    if coin == ETH:
+        signed_tx = account.sign_transaction(tx)
+        result = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
+        return result.hex()
+    elif coin == BTCTEST:
+        signed_tx = account.sign_transaction(tx)
+        return NetworkAPI.broadcast_tx_testnet(signed_tx)
+```
 
 Once you've signed the transaction, you will need to send it to the designated blockchain network.    
 
