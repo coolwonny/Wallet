@@ -1,13 +1,13 @@
 # Multi-Blockchain Wallet in Python
 
-In this assignment, we are going to create a code in Python that allows us to transact and manage a blockchain wallet not pertaining to one coin but acrosss 300+ coins. For this assignment, we are to make 2 coins working: **Ethereum** and **Bitcoin Testnet**. Ethereum keys are the same format on any network, so the Ethereum keys should work with your custom networks or testnets.    
+In this assignment, we are going to create a code in Python that allows us to transact and manage a blockchain wallet not pertaining to one coin but acrosss 300+ coins. For this assignment, we are to make 2 coins working: **Ethereum** and **Bitcoin Testnet**. Ethereum keys are the same format on any network, so the Ethereum keys should work with any custom networks or testnets.    
 
 The process can be divided into three parts: 
 - Writing a function that derives the wallet keys
 - Writing a function that links the derived keys to the accouts we want to make a transaction.
 - Testing some transactions using the code.
   
-### You may see the code either in [Jupyter notebook](https://github.com/coolwonny/Wallet/blob/master/wallet.ipynb) or [wallet.py](https://github.com/coolwonny/Wallet/blob/master/wallet.py).    
+### You may refer to the code either in [Jupyter notebook](https://github.com/coolwonny/Wallet/blob/master/wallet.ipynb) or [wallet.py](https://github.com/coolwonny/Wallet/blob/master/wallet.py).    
     
 
 
@@ -25,7 +25,7 @@ def derive_wallets(mnemonic, coin, numderive):
     keys = json.loads(output)
     # print all the addresses
     return keys
-```   
+``` 
 
 ## Linking the transaction signing libraries
 
@@ -96,7 +96,7 @@ def send_tx(coin, account, to, amount):
         return NetworkAPI.broadcast_tx_testnet(signed_tx)
 ```
 
-Once you've signed the transaction, you will need to send it to the designated blockchain network.    
+Once we've signed the transaction, we will need to send it to the designated blockchain network.    
 
 ## Send some transactions!
 
@@ -144,7 +144,7 @@ Execute the following steps:
 
 * Navigate to the [Github website](https://github.com/dan-da/hd-wallet-derive) for the `hd-wallet-derive` library and scroll down to the installation instructions.
 
- ![hd-wallet-derive-github](Images/hd-wallet-derive-github.png)
+ ![hd-wallet-derive-github](https://smu.bootcampcontent.com/SMU-Coding-Bootcamp/smu-dal-fin-pt-04-2020-u-c/raw/master/01-Lesson-Plans/19-Blockchain-Python/Supplemental/Images/hd-wallet-derive-github.png)
 
 * Next, open a terminal and execute the following commands. If you are using Windows, you will need to open the `git-bash` GUI via `C:\Program Files\Git\bin\bash.exe` directly to enable something called `tty` mode that makes the terminal more compatible with Unix systems. Once installed, you may move back to using the usual `git-bash` terminal.
 
