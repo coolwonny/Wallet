@@ -1,6 +1,6 @@
 # Multi-Blockchain Wallet in Python
 
-In this assignment, we are going to create a code in Python that allows us to transact and manage a blockchain wallet not pertaining to one coin but acrosss 300+ coins. For this assignment, we are to make 2 coins working: Ethereum and Bitcoin Testnet. Ethereum keys are the same format on any network, so the Ethereum keys should work with your custom networks or testnets.    
+In this assignment, we are going to create a code in Python that allows us to transact and manage a blockchain wallet not pertaining to one coin but acrosss 300+ coins. For this assignment, we are to make 2 coins working: **Ethereum** and **Bitcoin Testnet**. Ethereum keys are the same format on any network, so the Ethereum keys should work with your custom networks or testnets.    
 
 The process can be divided into three parts: 
 - Writing a function that derives the wallet keys
