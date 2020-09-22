@@ -19,37 +19,38 @@ In this section, we are to create a function using `subprocess` library that der
 
 In this section, we are to create three more functions as below.    
 
-1. `priv_key_to_account` -- this will convert the privkey string in a child key to an account object
+**1. `priv_key_to_account` -- this will convert the privkey string in a child key to an account object
 that bit or web3.py can use to transact.
-This function needs the following parameters:
-- coin -- the coin type (defined in constants.py).
-- priv_key -- the privkey string will be passed through here.
-- For ETH, return Account.privateKeyToAccount(priv_key)
-- For BTCTEST, return PrivateKeyTestnet(priv_key)
+This function needs the following parameters:**
+ - coin -- the coin type (defined in [constants.py](https://github.com/coolwonny/Wallet/blob/master/constants.py)).
+ - priv_key -- the privkey string will be passed through here.
+ - For ETH, return Account.privateKeyToAccount(priv_key)
+ - For BTCTEST, return PrivateKeyTestnet(priv_key)
 
-2. `create_tx` -- this will create the raw, unsigned transaction that contains all metadata needed to transact.
-This function needs the following parameters:
-- coin -- the coin type (defined in constants.py).
-- account -- the account object from priv_key_to_account.
-- to -- the recipient address.
-- amount -- the amount of the coin to send.
-- For ETH, return an object containing `to`, `from`, `value`, `gas`, `gasPrice` and `nonce`
-- For BTCTEST, return `PrivateKeyTestnet.prepare_transaction(account.address, [(to, amount, BTC)])`
+**2. `create_tx` -- this will create the raw, unsigned transaction that contains all metadata needed to transact.
+This function needs the following parameters:**
+ - coin -- the coin type (defined in [constants.py](https://github.com/coolwonny/Wallet/blob/master/constants.py)).
+ - account -- the account object from priv_key_to_account.
+ - to -- the recipient address.
+ - amount -- the amount of the coin to send.
+ - For ETH, return an object containing `to`, `from`, `value`, `gas`, `gasPrice` and `nonce`
+ - For BTCTEST, return `PrivateKeyTestnet.prepare_transaction(account.address, [(to, amount, BTC)])`
 
-3. `send_tx` -- this will call create_tx, sign the transaction, then send it to the designated network.
-This function needs the following parameters:
-- coin -- the coin type (defined in constants.py).
-- account -- the account object from priv_key_to_account.
-- to -- the recipient address.
-- amount -- the amount of the coin to send.
-- For ETH, return `w3.eth.sendRawTransaction(signed.rawTransaction)`
-- For BTCTEST, return `NetworkAPI.broadcast_tx_testnet(signed)`    
+**3. `send_tx` -- this will call create_tx, sign the transaction, then send it to the designated network.
+This function needs the following parameters:**
+ - coin -- the coin type (defined in [constants.py](https://github.com/coolwonny/Wallet/blob/master/constants.py)).
+ - account -- the account object from priv_key_to_account.
+ - to -- the recipient address.
+ - amount -- the amount of the coin to send.
+ - For ETH, return `w3.eth.sendRawTransaction(signed.rawTransaction)`
+ - For BTCTEST, return `NetworkAPI.broadcast_tx_testnet(signed)`    
 
 Once you've signed the transaction, you will need to send it to the designated blockchain network.    
 
 ## Send some transactions!
 
 This section is to test some transactions using the Python code we've created.    
+  
 ### 1. Local PoA Ethereum transaction   
 We can generate a transaction by calling the `send_tx` function with parameters ETH, eth_account(our account from which the transaction is made), recipient account and amount. For Ethereum, the amount represents in **Wei** so we need to get the exact Wei amount for the desired **Ether** by using **[converter](https://eth-converter.com/)**.    
 
